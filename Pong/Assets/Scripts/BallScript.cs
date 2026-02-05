@@ -6,15 +6,13 @@ public class BallScript : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float speed = 100f;
+    public float speed = 0.1f;
 
     private float x = 0f;
 
     private float y = -5f;
 
     private float z = 0f;
-
-    private float angle = 60f;
     
     public TextMeshProUGUI p1;
     public TextMeshProUGUI p2;
@@ -26,7 +24,7 @@ public class BallScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         Vector3 movement = new Vector3(x, y, z);
-        rb.AddForce(movement * speed);
+        rb.linearVelocity = movement * speed;
 
     }
 
@@ -36,35 +34,43 @@ public class BallScript : MonoBehaviour
         {
             // Debug.Log("Paddle Z: " + collision.gameObject.transform.position.z);
             // Debug.Log("Our Z: " + gameObject.transform.position.z);
-            rb.linearVelocity = Vector3.zero;
-            speed += 25;
+            // rb.linearVelocity = Vector3.zero;
+            speed += 1f;
             y = -y;
             z = gameObject.transform.position.z - collision.gameObject.transform.position.z;
             // Debug.Log(z);
             double temp = z / 2.5;
-            z = (float)temp * angle;
-            Vector3 movement = new Vector3(x, y, z);
+            z = (float)temp *(y);
+            if (z < 0 && z > -1)
+            {
+                z--;
+            } else if (z > 0 && z < 1)
+            {
+                z++;
+            }
+            // Debug.Log(z);
+            Vector3 movement = new Vector3(x, y, z / 2);
             //Mathf.Min((y + z), (y + 3))
-            rb.AddForce(movement * speed);
+            rb.linearVelocity = movement * speed;
             collision.gameObject.GetComponent<DemoPaddle>().frameCount = 0;
         }
 
         if (collision.gameObject.CompareTag("Bottom Wall"))
         {
             Vector3 movement = new Vector3(x, y, -5);
-            rb.AddForce(movement * speed);
+            rb.linearVelocity = movement * speed;
         }
         if (collision.gameObject.CompareTag("Top Wall"))
         {
             Vector3 movement = new Vector3(x, y, 5);
-            rb.AddForce(movement * speed);
+            rb.linearVelocity = movement * speed;
         
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player 1 Goal"))
+        if (other.gameObject.CompareTag("Player 2 Goal"))
         {
             sm.GetComponent<ScoreManager>().p1Score += 1;
             p1.text = "Player 1 Score: " + sm.gameObject.GetComponent<ScoreManager>().p1Score;
@@ -73,17 +79,17 @@ public class BallScript : MonoBehaviour
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(wait());
             rb.linearVelocity = Vector3.zero;
-            gameObject.GetComponent<Transform>().position = new Vector3(0, 5, 0);
+            gameObject.GetComponent<Transform>().position = new Vector3(0, 25, 0);
             x = 0;
-            y = -5;
+            y = 5;
             z = 0;
-            speed = 100f;
+            speed = 2f;
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             Vector3 movement = new Vector3(x, y, z);
-            rb.AddForce(movement * speed);
+            rb.linearVelocity = movement * speed;
 
         }
-        else if (other.gameObject.CompareTag("Player 2 Goal"))
+        else if (other.gameObject.CompareTag("Player 1 Goal"))
         {
             sm.GetComponent<ScoreManager>().p2Score += 1;
             p2.text = "Player 2 Score: " + sm.gameObject.GetComponent<ScoreManager>().p2Score;
@@ -92,14 +98,14 @@ public class BallScript : MonoBehaviour
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(wait());
             rb.linearVelocity = Vector3.zero;
-            gameObject.GetComponent<Transform>().position = new Vector3(0, 25, 0);
+            gameObject.GetComponent<Transform>().position = new Vector3(0, 5, 0);
             x = 0;
-            y = 5;
+            y = -5;
             z = 0;
-            speed = 100f;
+            speed = 2f;
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             Vector3 movement = new Vector3(x, y, z);
-            rb.AddForce(movement * speed);
+            rb.linearVelocity = movement * speed;
             
         }
     }

@@ -6,6 +6,8 @@ public class ScoreManager : MonoBehaviour
     public GameObject winTextObject1;
     public GameObject winTextObject2;
     public GameObject ball;
+    public GameObject paddle1;
+    public GameObject paddle2;
     public float p1Score = 0;
     public float p2Score = 0;
     
@@ -28,7 +30,9 @@ public class ScoreManager : MonoBehaviour
             p1Score = 0;
             p2Score = 0;
             Destroy(ball);
-            
+            paddle1.GetComponent<DemoPaddle>().canParry = false;
+            paddle2.GetComponent<DemoPaddle>().canParry = false;
+
         }
         else if (p2Score == 11)
         {
@@ -37,6 +41,8 @@ public class ScoreManager : MonoBehaviour
             p1Score = 0;
             p2Score = 0;
             Destroy(ball);
+            paddle1.GetComponent<DemoPaddle>().canParry = false;
+            paddle2.GetComponent<DemoPaddle>().canParry = false;
         }
         
     }

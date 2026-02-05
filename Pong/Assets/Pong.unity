@@ -670,9 +670,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcc8fb7caba78c40a290608514c52fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DemoPaddle
-  paddleSpeed: 20
+  paddleSpeed: 25
   forceStrength: 10
   maxZ: 12
+  scores: {fileID: 1024196111}
+  canParry: 1
   ball: {fileID: 2117730404}
   playerNumber: 2
   frameCount: 0
@@ -896,9 +898,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcc8fb7caba78c40a290608514c52fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DemoPaddle
-  paddleSpeed: 20
+  paddleSpeed: 25
   forceStrength: 10
   maxZ: 12
+  scores: {fileID: 1024196111}
+  canParry: 1
   ball: {fileID: 2117730404}
   playerNumber: 1
   frameCount: 0
@@ -1182,6 +1186,8 @@ MonoBehaviour:
   winTextObject1: {fileID: 1106433147}
   winTextObject2: {fileID: 83081193}
   ball: {fileID: 2117730404}
+  paddle1: {fileID: 898644083}
+  paddle2: {fileID: 795958345}
   p1Score: 0
   p2Score: 0
 --- !u!4 &1024196113
@@ -2121,7 +2127,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 2
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!135 &2117730406
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2227,7 +2233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c196191a9cc1645b0055e58a8568bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallScript
-  speed: 100
+  speed: 2
   p1: {fileID: 1278830381}
   p2: {fileID: 1450647633}
   sm: {fileID: 1024196111}

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -11,10 +12,13 @@ public class DemoPaddle : MonoBehaviour
 
     public float maxZ = 5f;
 
+    public GameObject scores;
+
     private Rigidbody rb;
     private float movementX;
     private float movementY;
     private bool down;
+    public bool canParry = true;
     private bool up;
     public GameObject ball;
     public int playerNumber = 1;
@@ -25,27 +29,31 @@ public class DemoPaddle : MonoBehaviour
 
     void OnParry(InputValue value)
     {
-        if (value.isPressed)
+        if (canParry)
         {
 
-            // float temp =  gameObject.transform.position.y - ball.gameObject.transform.position.y;
-            if (ball.gameObject.transform.position.y > 15)
+            if (value.isPressed)
             {
-                if (ball.gameObject.transform.position.y >= 29)
+
+                // float temp =  gameObject.transform.position.y - ball.gameObject.transform.position.y;
+                if (ball.gameObject.transform.position.y > 15)
                 {
-                    ball.GetComponent<BallScript>().speed += 100;
-                    Debug.Log("PARRIED");
+                    if (ball.gameObject.transform.position.y >= 29)
+                    {
+                        ball.GetComponent<BallScript>().speed += 1;
+                        Debug.Log("PARRIED");
+                    }
+                }
+                else
+                {
+                    if (ball.gameObject.transform.position.y <= -1)
+                    {
+                        ball.GetComponent<BallScript>().speed += 2;
+                        Debug.Log("PARRIED");
+                    }
                 }
             }
-            else
-            {
-                if (ball.gameObject.transform.position.y <= -1)
-                {
-                    ball.GetComponent<BallScript>().speed += 100;
-                    Debug.Log("PARRIED");
-                }
-            }
-            
+
         }
     }
 
@@ -74,18 +82,7 @@ public class DemoPaddle : MonoBehaviour
     //     up = Keyboard.current.aKey.isPressed;
     //     down = Keyboard.current.dKey.isPressed;
     // }
-
     
-    // if (Input.GetKeyDown(KeyCode.Space))
-    // {
-    //     Debug.Log(frameCount);
-    //     if (ball.gameObject.transform.position.y - gameObject.transform.position.y <= 1)
-    //     {
-    //         Debug.Log("PARRIED");
-    //         ball.GetComponent<BallScript>().speed += 25f;
-    //     }
-    //         
-    // }
     
     void Update()
     {
