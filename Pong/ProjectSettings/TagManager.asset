@@ -9,6 +9,9 @@ TagManager:
   - Top Wall
   - Player 1 Goal
   - Player 2 Goal
+  - Speed Up
+  - Big
+  - Small
   layers:
   - Default
   - TransparentFX

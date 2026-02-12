@@ -14,6 +14,9 @@ public class DemoPaddle : MonoBehaviour
 
     public GameObject scores;
 
+    public AudioClip sound;
+    private AudioSource audioSource;
+
     private Rigidbody rb;
     private float movementX;
     private float movementY;
@@ -29,6 +32,7 @@ public class DemoPaddle : MonoBehaviour
 
     void OnParry(InputValue value)
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         if (canParry)
         {
 
@@ -40,6 +44,7 @@ public class DemoPaddle : MonoBehaviour
                 {
                     if (ball.gameObject.transform.position.y >= 29)
                     {
+                        audioSource.PlayOneShot(sound);
                         ball.GetComponent<BallScript>().speed += 1;
                         Debug.Log("PARRIED");
                     }
@@ -49,6 +54,7 @@ public class DemoPaddle : MonoBehaviour
                     if (ball.gameObject.transform.position.y <= -1)
                     {
                         ball.GetComponent<BallScript>().speed += 2;
+                        audioSource.PlayOneShot(sound);
                         Debug.Log("PARRIED");
                     }
                 }
