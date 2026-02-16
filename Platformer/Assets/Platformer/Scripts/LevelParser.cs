@@ -80,6 +80,22 @@ public class LevelParser : MonoBehaviour
                     Transform rockInstance = Instantiate(rockPrefab).transform;
                     rockInstance.position = position;
                 }
+                else if (currentChar == '?')
+                {
+                    Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    Transform questionInstance = Instantiate(questionBoxPrefab).transform;
+                    questionInstance.position = position;
+                } else if (currentChar == 'b')
+                {
+                    Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    Transform brickInstance = Instantiate(brickPrefab).transform;
+                    brickInstance.position = position;
+                } else if (currentChar == 's')
+                {
+                    Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    Transform stoneInstance = Instantiate(strongPrefab).transform;
+                    stoneInstance.position = position;
+                }
 
             }
 
