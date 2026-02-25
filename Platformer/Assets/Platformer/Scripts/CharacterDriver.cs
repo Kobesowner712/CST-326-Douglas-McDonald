@@ -6,6 +6,7 @@ public class CharacterDriver : MonoBehaviour
 {
     public float groundAcceleration = 15f;
     public float walkSpeed = 5f;
+    public bool canMove = true;
     public float runSpeed = 10f;
 
     public float apexHeight = 4.5f;
@@ -14,21 +15,26 @@ public class CharacterDriver : MonoBehaviour
     private Vector2 _velocity;
     private CharacterController _controller;
 
+    private Animator _animator;
+
     private Quaternion facingRight;
     private Quaternion facingLeft;
+    public GameObject time;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _controller = GetComponent<CharacterController>();
-        facingRight = Quaternion.identity;
-        facingLeft = Quaternion.Euler(0f, 180f, 0f);
-
+        facingRight = Quaternion.Euler(0f, 90f, 0f);
+        facingLeft = Quaternion.Euler(0f, -90f, 0f);
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        bool run = Keyboard.current.shiftKey.isPressed;
         float direction = 0f;
         if (Keyboard.current.dKey.isPressed)
         {
@@ -42,27 +48,50 @@ public class CharacterDriver : MonoBehaviour
         bool jumpPressedThisFrame = Keyboard.current.spaceKey.wasPressedThisFrame;
         bool jumpHeld = Keyboard.current.spaceKey.isPressed;
 
-
-        float gravityModifier = 1f;
-        if (_controller.isGrounded)
-        {
-            if (direction != 0f)
+        
+            if (!run)
             {
-                if (Mathf.Sign(direction) != Mathf.Sign(_velocity.x))
+                if (direction != 0f)
                 {
-                    _velocity.x = 0f;
+                    if (Mathf.Sign(direction) != Mathf.Sign(_velocity.x))
+                    {
+                        _velocity.x = 0f;
+                    }
+
+                    _velocity.x += direction * groundAcceleration * Time.deltaTime;
+                    _velocity.x = Mathf.Clamp(_velocity.x, -walkSpeed, walkSpeed);
+
+                    transform.rotation = (direction > 0f) ? facingRight : facingLeft;
                 }
-
-                _velocity.x += direction * groundAcceleration * Time.deltaTime;
-                _velocity.x = Mathf.Clamp(_velocity.x, -walkSpeed, walkSpeed);
-
-                transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+                else
+                {
+                    _velocity.x = Mathf.MoveTowards(_velocity.x, 0f, groundAcceleration * Time.deltaTime);
+                }
             }
             else
             {
-                _velocity.x = Mathf.MoveTowards(_velocity.x, 0f, groundAcceleration * Time.deltaTime);
-            }
+                if (direction != 0f)
+                {
+                    if (Mathf.Sign(direction) != Mathf.Sign(_velocity.x))
+                    {
+                        _velocity.x = 0f;
+                    }
 
+                    _velocity.x += direction * groundAcceleration * Time.deltaTime * 2;
+                    _velocity.x = Mathf.Clamp(_velocity.x, -runSpeed, runSpeed);
+
+                    transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+                }
+                else
+                {
+                    _velocity.x = Mathf.MoveTowards(_velocity.x, 0f, groundAcceleration * Time.deltaTime);
+                }
+            }
+        
+        
+        float gravityModifier = 1f;
+        if (_controller.isGrounded)
+        {
             if (jumpPressedThisFrame)
             {
                 _velocity.y = 2f * apexHeight / apexTime;
@@ -88,12 +117,29 @@ public class CharacterDriver : MonoBehaviour
         CollisionFlags collisions = _controller.Move(deltaPosition);
         if ((collisions & CollisionFlags.CollidedAbove) != 0)
         {
-            _velocity.y = 0f;
+            _velocity.y = -3f;
+            jumpHeld = false;
         }
         if ((collisions & CollisionFlags.CollidedSides) != 0)
         {
             _velocity.x = 0f;
         } 
+        
+        _animator.SetFloat("Speed", Mathf.Abs(_velocity.x));
+        _animator.SetBool("Grounded", _controller.isGrounded);
         // Debug.Log($"Groudned: {_controller.isGrounded}");
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            Debug.Log("You Drowned In Water!");
+        } else if (other.gameObject.CompareTag("Winner!") && time.GetComponent<TimeController>().isCountingDown)
+        {
+            Debug.Log("You win, Congrats!");
+            time.GetComponent<TimeController>().isCountingDown = false;
+        }
     }
 }

@@ -33,12 +33,16 @@ public class LevelParser : MonoBehaviour
 {
     public TextAsset levelFile;
     public Transform levelRoot;
+    public GameObject player;
+    public Camera camera;
 
     [Header("Prefabs")]
     public GameObject rockPrefab;
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject strongPrefab;
+    public GameObject waterPrefab;
+    public GameObject winPrefab;
 
     void Start()
     {
@@ -48,7 +52,11 @@ public class LevelParser : MonoBehaviour
     void Update()
     {
         if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
             ReloadLevel();
+            player.transform.position = new Vector3(11.01f, 1.91f, 0f);
+            camera.transform.position = new Vector3(19.36f, 7.5f, -10f);
+        }
     }
 
     void LoadLevel()
@@ -79,22 +87,39 @@ public class LevelParser : MonoBehaviour
                     Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform rockInstance = Instantiate(rockPrefab).transform;
                     rockInstance.position = position;
+                    rockInstance.parent = levelRoot;
                 }
                 else if (currentChar == '?')
                 {
                     Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform questionInstance = Instantiate(questionBoxPrefab).transform;
                     questionInstance.position = position;
+                    questionInstance.parent = levelRoot;
                 } else if (currentChar == 'b')
                 {
                     Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform brickInstance = Instantiate(brickPrefab).transform;
                     brickInstance.position = position;
+                    brickInstance.parent = levelRoot;
+
                 } else if (currentChar == 's')
                 {
                     Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform stoneInstance = Instantiate(strongPrefab).transform;
                     stoneInstance.position = position;
+                    stoneInstance.parent = levelRoot;
+                } else if (currentChar == 'w')
+                {
+                    Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    Transform waterInstance = Instantiate(waterPrefab).transform;
+                    waterInstance.position = position;
+                    waterInstance.parent = levelRoot;
+                } else if (currentChar == 'e')
+                {
+                Vector3 position = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                Transform winInstance = Instantiate(winPrefab).transform;
+                winInstance.position = position;
+                winInstance.parent = levelRoot;
                 }
 
             }

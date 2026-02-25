@@ -173,10 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78669c6dd54a6d34b86e4a4de688561e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1644911094}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78669c6dd54a6d34b86e4a4de688561e, type: 3}
       insertIndex: -1
@@ -207,11 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDriver
   groundAcceleration: 15
   walkSpeed: 5
-  canMove: 0
   runSpeed: 10
   apexHeight: 4.5
   apexTime: 0.5
-  time: {fileID: 2051508850}
 --- !u!143 &227078289
 CharacterController:
   m_ObjectHideFlags: 0
@@ -259,11 +254,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!4 &227078292 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78669c6dd54a6d34b86e4a4de688561e, type: 3}
-  m_PrefabInstance: {fileID: 227078286}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &274684274
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,16 +681,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bebc5e1e08d2ba4e8e47295d2195289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelFile: {fileID: 4900000, guid: 2f58b869becf95d4e9cbfdd1e3df136a, type: 3}
+  levelFile: {fileID: 4900000, guid: 3cc86b075fe911c4b8b8055a38219a43, type: 3}
   levelRoot: {fileID: 406602702}
-  player: {fileID: 227078287}
-  camera: {fileID: 963194227}
   rockPrefab: {fileID: 542034316114570666, guid: d44259aaf8061944693d494a1fe820ab, type: 3}
   brickPrefab: {fileID: 595604620595545170, guid: dae9cdeea005d5a41bb81959009c8105, type: 3}
   questionBoxPrefab: {fileID: 805336226329344963, guid: 58769574a24bb8c43b5e1abd1f78e173, type: 3}
   strongPrefab: {fileID: 8168724118085698652, guid: 931e2c2b5166f65458c54523546433bd, type: 3}
-  waterPrefab: {fileID: 7749594009628525664, guid: 379b720ce9e5bbd4d9c8e7b2415b9828, type: 3}
-  winPrefab: {fileID: 3571691671065676508, guid: cb31a94451ffd7c48853a628b811859a, type: 3}
 --- !u!4 &610288774
 Transform:
   m_ObjectHideFlags: 0
@@ -1294,134 +1280,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589785553}
   m_CullTransparentMesh: 1
---- !u!1 &1644911093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1644911094}
-  - component: {fileID: 1644911097}
-  - component: {fileID: 1644911096}
-  - component: {fileID: 1644911095}
-  - component: {fileID: 1644911098}
-  m_Layer: 0
-  m_Name: Collider For Bricks
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1644911094
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644911093}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.26, z: 0}
-  m_LocalScale: {x: 1, y: 0.058647, z: 0.094415}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 227078292}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1644911095
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644911093}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1644911096
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644911093}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1644911097
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644911093}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1644911098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644911093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d79d1643d3c7140b230f0f5976927a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumpCollissions
-  DemoLogic: {fileID: 292474399}
-  coinUnit: {fileID: 770701239}
-  scoreText: {fileID: 274684276}
 --- !u!1 &1671792838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,8 +1479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeController
   timeText: {fileID: 1589785555}
-  isCountingDown: 1
-  player: {fileID: 227078287}
 --- !u!4 &2051508852
 Transform:
   m_ObjectHideFlags: 0

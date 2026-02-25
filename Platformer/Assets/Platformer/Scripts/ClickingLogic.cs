@@ -27,22 +27,24 @@ public class ClickingLogic : MonoBehaviour
             {
                 if (screenHitInfo.collider.CompareTag("Brick"))
                 {
-                    Destroy(screenHitInfo.collider.gameObject);
+                    // Destroy(screenHitInfo.collider.gameObject);
                 }
                 else if (screenHitInfo.collider.CompareTag("Question Box"))
                 {
-                    coins++;
-                    if (coins < 10)
-                    {
-                        coinUnit.text = "x0" + coins;
-                    }
-                    else
-                    {
-                        coinUnit.text = "x" + coins;
-                    }
+                        // coins++;
+                        // if (coins < 10)
+                        // {
+                        //     coinUnit.text = "x0" + coins;
+                        // }
+                        // else
+                        // {
+                        //     coinUnit.text = "x" + coins;
+                        // }
                 }
             }
         }
 
     }
+
+
 }

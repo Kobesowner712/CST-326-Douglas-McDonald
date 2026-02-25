@@ -8,6 +8,8 @@ TagManager:
   - Brick
   - Question Box
   - Stone
+  - Water
+  - Winner!
   layers:
   - Default
   - TransparentFX
