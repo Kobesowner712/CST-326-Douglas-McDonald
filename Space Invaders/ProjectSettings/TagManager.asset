@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Wall
+  - Player Bullet
+  - Enemy Bullet
+  - Top Row Enemies
+  - Middle Row Enemies
+  - Bottom Row Enemies
+  - Side Enemies
   layers:
   - Default
   - TransparentFX
@@ -11,9 +18,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Enemy Bullet
+  - Wall
   - Bullet
-  - 
-  - 
   - 
   - 
   - 
