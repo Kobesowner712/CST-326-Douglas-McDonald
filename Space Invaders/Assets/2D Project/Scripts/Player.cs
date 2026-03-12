@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,10 +9,14 @@ public class Player : MonoBehaviour
     public Transform shootOffsetTransform;
     private float lives = 3f;
     private bool canMove = true;
-
+    public AudioClip shotSFX;
+    public AudioClip deathSFX;
+    private AudioSource sound;
+    public GameObject sceneManager;
     void Start()
     {
         // todo - get and cache animator
+        sound = gameObject.GetComponent<AudioSource>();
     }
     
     void Update()
@@ -22,6 +27,7 @@ public class Player : MonoBehaviour
             {
                 GameObject shot = Instantiate(bulletPrefab, shootOffsetTransform.position, Quaternion.identity);
                 // Debug.Log("Bang!");
+                sound.PlayOneShot(shotSFX, 0.7f);
 
                 // todo - destroy the bullet after 3 seconds
                 Destroy(shot, 3f);
@@ -45,6 +51,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator transferToCredits()
+    {
+        yield return new WaitForSeconds(3);
+        sceneManager.GetComponent<GameToCredits>().LoadGame();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -59,7 +71,11 @@ public class Player : MonoBehaviour
             if (lives == 0)
             {
                 Debug.Log("GAME OVER YOU LOSE!");
+                sound.PlayOneShot(deathSFX);
                 canMove = false;
+                GetComponent<Animator>().SetTrigger("PlayerDeath");
+                StartCoroutine(transferToCredits());
+
             }
             
         }

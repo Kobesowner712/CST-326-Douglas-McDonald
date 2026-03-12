@@ -13,15 +13,13 @@ public class StartScreen : MonoBehaviour
     public GameObject blackScreen;
     public TextMeshProUGUI info;
     public GameObject images;
-
     public GameObject barricades;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemies.SetActive(false);
-        player.SetActive(false);
-        player.SetActive(false);
-        barricades.SetActive(false);
+        // enemies.SetActive(false);
+        // player.SetActive(false);
+        // barricades.SetActive(false);
         blackScreen.SetActive(true);
         StartCoroutine(Wait());
 
@@ -47,7 +45,6 @@ public class StartScreen : MonoBehaviour
     void startGame()
     {
         enemies.SetActive(true);
-        player.SetActive(true);
         player.SetActive(true);
         barricades.SetActive(true);
         blackScreen.SetActive(false);

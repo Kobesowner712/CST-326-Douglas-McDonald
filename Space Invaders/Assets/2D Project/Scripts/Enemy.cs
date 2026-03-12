@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,9 +8,12 @@ public class Enemy : MonoBehaviour
 
     public static event EnemyDiedFunc OnEnemyDied;
 
-    private AudioSource audioSource;
-    public AudioClip tic;
-    public AudioClip tac;
+    private AudioSource sound;
+    public String wallName = "";
+    public AudioClip deathSFX;
+    public AudioClip shotSFX;
+    public GameObject sceneManager;
+
 
     private GameObject parent;
     
@@ -19,6 +23,8 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         parent = transform.parent.gameObject;
+        sound = gameObject.GetComponent<AudioSource>();
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -30,8 +36,10 @@ public class Enemy : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player Bullet"))
             {
+                gameObject.GetComponent<Animator>().SetTrigger("EnemyDied");
+                sound.PlayOneShot(deathSFX, 0.7f);
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 Destroy(collision.gameObject);
-                Destroy(gameObject);
                 if (gameObject.CompareTag("Bottom Row Enemies"))
                 {
                     OnEnemyDied?.Invoke(10);
@@ -51,12 +59,16 @@ public class Enemy : MonoBehaviour
                     
                 }
                 parent.transform.parent.gameObject.GetComponent<AllRows>().anEnemyDied = true;
+                parent.transform.parent.gameObject.GetComponent<AllRows>().decreaseEnemies();
+                StartCoroutine(DestroyEnemy(collision));
             }
         }
-        
-        
+    }
 
-        // todo - trigger death animation
+    IEnumerator DestroyEnemy(Collision2D collision)
+    {
+        yield return new WaitForSeconds(1.333f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -64,26 +76,22 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             parent.GetComponent<EnemyRows>().hitAWall = true;
+            wallName = other.name;
+            parent.GetComponent<EnemyRows>().setWallName(wallName);
         }
     }
 
     public void shoot()
     {
+        gameObject.GetComponent<Animator>().SetTrigger("EnemyShoot");
         GameObject shot = Instantiate(bulletPrefab, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1f, 0f), Quaternion.identity);
+        sound.PlayOneShot(shotSFX, 0.7f);
+        
         
         // Debug.Log("Bang!");
         // todo - destroy the bullet after 3 seconds
         Destroy(shot, 3f);
     }
 
-
-    // public void PlayTicSound()
-    // {
-    //     GetComponent<AudioSource>().PlayOneShot(tic);
-    // }
-    //
-    // public void PlayTacSound()
-    // {
-    //     GetComponent<AudioSource>().PlayOneShot(tac);
-    // }
+    
 }

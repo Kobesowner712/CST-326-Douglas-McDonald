@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 using UnityEngine.Audio;
 
 public class EnemyRows : MonoBehaviour
@@ -12,12 +13,15 @@ public class EnemyRows : MonoBehaviour
     private bool canMove = false;
     private bool canShoot = false;
     public bool movingLeft = true;
+    public String wallName;
     public bool hitAWall = false;
 
-    private float seconds = 1;
+    public float seconds = 1;
     
     void Start()
     {
+        canMove = false;
+        bool canShoot = false;
         allRows = transform.parent.gameObject;
         enemies = new GameObject[6];
         enemies[0] = gameObject.transform.Find("1").gameObject;
@@ -27,19 +31,20 @@ public class EnemyRows : MonoBehaviour
         enemies[4] = gameObject.transform.Find("5").gameObject;
         enemies[5] = gameObject.transform.Find("6").gameObject;
         StartCoroutine(Move());
+        Debug.Log(gameObject.name);
         StartCoroutine(Shoot());
     }
 
 
     IEnumerator Move()
     {
-        
         yield return new WaitForSeconds(seconds);
         if (hitAWall)
         {
             allRows.GetComponent<AllRows>().moveDown = true;
             hitAWall = false;
         }
+
 
         if (movingLeft)
         {
@@ -51,20 +56,36 @@ public class EnemyRows : MonoBehaviour
             gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.25f,
                 gameObject.transform.position.y, gameObject.transform.position.z);
         }
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i] != null)
+            {
+                enemies[i].gameObject.GetComponent<Animator>().SetTrigger("Move");
+            }
+        }
         canMove = true;
     }
 
     IEnumerator Shoot()
     {
-        float shootDelay = Random.Range(0.0f, 10.0f);
-        int shooter = Random.Range(0, 6);
+        float shootDelay = UnityEngine.Random.Range(0.0f, 10.0f);
+        int shooter = UnityEngine.Random.Range(0, 6);
         yield return new WaitForSeconds(shootDelay);
         if (enemies[shooter] != null)
         {
             enemies[shooter].GetComponent<Enemy>().shoot();
+            
         }
 
         canShoot = true;
+    }
+
+    public void setWallName(String wallName)
+    {
+        this.wallName = wallName;
+        allRows.GetComponent<AllRows>().setWallName(wallName);
+
     }
 
     public void lowerSpeed()
@@ -74,6 +95,7 @@ public class EnemyRows : MonoBehaviour
 
     void Update()
     {
+        // Debug.Log(gameObject.name + " updated!");
         if (canMove)
         {
             StartCoroutine(Move());
