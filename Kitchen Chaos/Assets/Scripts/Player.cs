@@ -11,7 +11,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         private set;
     }
 
-
+    public event EventHandler OnPickedSomething;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
 
     public class OnSelectedCounterChangedEventArgs : EventArgs
@@ -49,6 +49,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
     {
+        if (!GameManager.Instance.IsGamePlaying())
+        {
+            return;
+        }
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
@@ -57,6 +61,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
+        if (!GameManager.Instance.IsGamePlaying())
+        {
+            return;
+        }
         if (selectedCounter != null)
         {
             selectedCounter.Interact(this);
@@ -121,7 +129,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         if (!canMove)
         {
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirX, moveSpeed * Time.deltaTime);
+            canMove = (moveDir.x < -0.5f || moveDirX.x > 0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirX, moveSpeed * Time.deltaTime);
             if (canMove)
             {
                 moveDir = moveDirX;
@@ -129,7 +137,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             else
             {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                canMove = moveDir.z != 0 &&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirZ, moveSpeed * Time.deltaTime);
+                canMove = (moveDir.z < -0.5f || moveDirX.z > 0.5f) &&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerSize, moveDirZ, moveSpeed * Time.deltaTime);
 
                 if (canMove)
                 {
@@ -171,6 +179,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+        if (kitchenObject != null)
+        {
+            OnPickedSomething?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject()
@@ -182,6 +194,19 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         kitchenObject = null;
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Lizard"))
+        {
+            
+            if (GetKitchenObject() != null) 
+            {
+                GetKitchenObject().DestroySelf();
+            }
+
+        }
     }
 
     public bool HasKitchenObject()

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BurningRecipeSO
   input: {fileID: 11400000, guid: 365153e66f3ee1b49a23fa3eb8fae5c7, type: 2}
   output: {fileID: 11400000, guid: f05031d95498f69418fb0a9e718882c8, type: 2}
-  burningTimerMax: 5
+  burningTimerMax: 6
